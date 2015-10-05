@@ -21,4 +21,4 @@ ADD start.sh /opt/zookeeper/start.sh
 
 VOLUME ["/opt/zookeeper/conf", "/tmp/zookeeper"]
 
-CMD ["/opt/zookeeper/start.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/zookeeper/start.sh"]

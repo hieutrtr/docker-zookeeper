@@ -7,4 +7,4 @@ if [[ "$MYID" ]]; then
 fi
 
 echo "Starting zookeeper"
-exec /opt/zookeeper/bin/zkServer.sh
+exec /opt/zookeeper/bin/zkServer.sh start-foreground
