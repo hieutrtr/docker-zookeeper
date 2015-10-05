@@ -17,7 +17,8 @@ WORKDIR /opt/zookeeper
 
 ADD config/zoo.cfg /opt/zookeeper/conf/zoo.cfg
 ADD config/myid /tmp/zookeeper/myid
+ADD start.sh /opt/zookeeper/start.sh
 
 VOLUME ["/opt/zookeeper/conf", "/tmp/zookeeper"]
 
-CMD ["/start.sh"]
+CMD ["/opt/zookeeper/start.sh"]
