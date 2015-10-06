@@ -1,0 +1,12 @@
+{
+  "uploadOnSave": true,
+  "hostname": "10.60.6.5",
+  "port": "22",
+  "target": "/root/docker-zookeeper",
+  "ignore": [
+    ".git/**"
+  ],
+  "username": "root",
+  "password": "a@123456",
+  "transport": "scp"
+}

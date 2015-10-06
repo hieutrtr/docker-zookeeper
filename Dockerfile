@@ -1,24 +1,15 @@
-# DOCKER-VERSION 1.0.1
-# VERSION        0.5
+FROM ubuntu:vivid
 
-FROM debian:jessie
-MAINTAINER Justin Plock <justin@plock.net>
-
-RUN apt-get update && apt-get install -y openjdk-7-jre-headless wget
-RUN wget -q -O - http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz | tar -xzf - -C /opt \
-    && mv /opt/zookeeper-3.4.6 /opt/zookeeper \
-    && mkdir -p /tmp/zookeeper
-
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
-
-EXPOSE 2181 2888 3888
-
-WORKDIR /opt/zookeeper
-
-ADD config/zoo.cfg /opt/zookeeper/conf/zoo.cfg
-ADD config/myid /tmp/zookeeper/myid
-ADD start.sh /opt/zookeeper/start.sh
-
-VOLUME ["/opt/zookeeper/conf", "/tmp/zookeeper"]
-
-ENTRYPOINT ["/bin/bash", "/opt/zookeeper/start.sh"]
+RUN apt-get update \
+ && apt-get -y install git ant openjdk-8-jdk \
+ && apt-get clean
+RUN mkdir /tmp/zookeeper
+WORKDIR /tmp/zookeeper
+RUN git clone https://github.com/apache/zookeeper.git .
+RUN git checkout release-3.5.1-rc2
+RUN ant jar
+RUN cp /tmp/zookeeper/conf/zoo_sample.cfg /tmp/zookeeper/conf/zoo.cfg
+RUN echo "standaloneEnabled=false" >> /tmp/zookeeper/conf/zoo.cfg
+RUN	echo "dynamicConfigFile=/tmp/zookeeper/conf/zoo.cfg.dynamic" >> /tmp/zookeeper/conf/zoo.cfg
+ADD zk-init.sh /usr/local/bin/
+ENTRYPOINT ["/usr/local/bin/zk-init.sh"]
