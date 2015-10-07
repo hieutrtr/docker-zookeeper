@@ -12,4 +12,5 @@ RUN cp /tmp/zookeeper/conf/zoo_sample.cfg /tmp/zookeeper/conf/zoo.cfg
 RUN echo "standaloneEnabled=false" >> /tmp/zookeeper/conf/zoo.cfg
 RUN	echo "dynamicConfigFile=/tmp/zookeeper/conf/zoo.cfg.dynamic" >> /tmp/zookeeper/conf/zoo.cfg
 ADD zk-init.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/zk-init.sh
 ENTRYPOINT ["/usr/local/bin/zk-init.sh"]
